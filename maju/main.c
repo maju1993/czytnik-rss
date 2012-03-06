@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <curl/curl.h>
+//#include <curl/types.h>
+#include <curl/easy.h>
+
+//size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
+//    written = fwrite(ptr, size, nmemb, stream);
+//    return written;
+//}/
+
 
 void menu();
+void downloadfile(char link[]);
 int isAddCommand( char command[]);
 int isListCommand( char command[]);
 int isUpCommand( char command[]);
@@ -43,6 +53,15 @@ int isDelCommand( char command[])
 	return strcmp(temp,"channel delete");
 }
 
+void downloadfile(char link[])
+{
+	char command[255]="wget ";
+	strcat (command,link);
+	strcat (command," -O file.rss");
+	system(command);
+	system("clear");
+	printf("Pobrano plik %s\n",link);
+}
 
 void menu()
 {
@@ -59,7 +78,8 @@ void menu()
 		{
 			link=strndup(command+12, strlen(command));
 			printf("dodano kanał %s\n",link);
-			URLOpenBlockinStream(0,link,&pStream,0,0);
+			downloadfile(link);
+		
 			//czydobrylink(), sciagnij(), dodajdobazy();
 		}
 		if (isListCommand(command)==0)
