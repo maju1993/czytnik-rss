@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
+//#include <sys/types.h>
+#include <sys/stat.h>
 #include <curl/curl.h>
 #include "parser.h"
 
@@ -562,6 +565,11 @@ int Show(char* title, int count)
 
 int main (int argc, char** argv)
 {
+	DIR  *dip;
+	if ((dip = opendir("data")) == NULL)
+  	{         
+    		 mkdir("data",S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+  	}
 
 	menu();
 	
